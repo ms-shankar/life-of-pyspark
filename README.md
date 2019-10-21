@@ -8,7 +8,7 @@ A Tale of Two Environments
 
 An objective comparison of running [Spark](https://spark.apache.org/) on Scala vs. Python in both development and production environments.
 
-![gif](presentation/reveal.js/images/pi.gif)
+![gif](presentation/reveal.js/images/pi.gif){.center}
 
 ## Index
 
