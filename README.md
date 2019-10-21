@@ -16,7 +16,7 @@ An objective comparison of running [Spark](https://spark.apache.org/) on Scala v
 - [Introduction](#introduction)
 - [Presentation](#introduction)
   - [Commands](#commands)
--  [Demo](#usage)
+- [Demo](#usage)
   - [Commands](#commands)
 
 ###  Introduction
