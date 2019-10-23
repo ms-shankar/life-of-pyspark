@@ -19,12 +19,11 @@ An objective comparison of running [Spark](https://spark.apache.org/) on Scala v
 - [Presentation](#introduction)
   - [Commands](#commands)
 - [Demo](#usage)
-  - [Commands](#commands)
 
 ###  Introduction
 
 
-### Presentation
+## Presentation
 
 - Clone this repository
 
@@ -34,7 +33,7 @@ Run the following commands to:
 - install dependencies
 - run the presentation
 
-## Commands
+### Commands
 
 ```
 $ cd presentation/reveal.js
@@ -48,7 +47,29 @@ $ npm install
 $ npm start
 ```
 
-### Demo
+## Demo
 
+Run the following commands to setup a Jupyter Notebook running on a Spark cluster
 
-## Commands
+### Commands
+
+- SETUP JUPYTER NOTEBOOK WITH PYSPARK
+
+-- Install Jupyter notebook using PyPI pip
+```
+$ pip install jupyter
+```
+
+-- Make Pyspark available to Jupyter
+```
+$ pip install findspark
+```
+
+-- Configure Notebook password
+```
+$ jupyter-notebook password
+```
+-- Launch Notebook
+```
+$ jupyter-notebook --notebook-dir /path/to/a/local/directory
+```
