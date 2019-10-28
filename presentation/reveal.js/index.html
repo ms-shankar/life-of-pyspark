@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Life of PySpark</title>
+
+		<meta name="description" content="PyMunich Presentation">
+		<meta name="author" content="Shankar Mohanbabu Sathyakumari">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<div style='position:fixed; border:0px solid red; margin-top:0px;'> <!-- This is the containing element. Uses position:relative -->
+				<img src='images/pydata.png' style='position:fixed; top:0; left:0;' width='240px' height='' alt='' /> <!-- Image will stick to the top left of the parent element -->
+			</div>
+
+			<!-- Any section element inside of this container is disp	layed as a slide -->
+			<div class="slides">
+				<section data-background="images/pi.gif">
+					<h1><a>Life of PySpark</a></h1>
+					<h3>A tale of two environments</h3>
+					<p>
+						<small><a>Mohanababu Sathyakumari Shankar</a> </small>
+					</p>
+				</section>
+				<section>
+					<h3><a>Contents</a></h3>
+					<p ALIGN=CENTER>
+					<ul>
+					    <span style="display: inline-block; position:fixed; left:300px;" class="fragment fade-right"> - Who I am! </span><br/>
+					    <span style="display: inline-block; position:fixed; left:300px;" class="fragment fade-right"> - A Brief history of Spark </span><br/>
+					    <span style="display: inline-block; position:fixed; left:300px;" class="fragment fade-right"> - Grapes of Spark </span><br/>
+					    <span style="display: inline-block; position:fixed; left:300px;" class="fragment fade-right"> - The Metamorphosis </span><br/>
+					    <span style="display: inline-block; position:fixed; left:300px;" class="fragment fade-right"> - Brave New PySpark </span><br/>
+					    <span style="display: inline-block; position:fixed; left:300px;" class="fragment fade-right"> - To Kill a Mocking Bear </span><br/>
+					    <span style="display: inline-block; position:fixed; left:300px;" class="fragment fade-right"> - Pride and Production </span><br/>
+					    <span style="display: inline-block; position:fixed; left:300px;" class="fragment fade-right"> - Sense and Scalability </span><br/>
+					    <span style="display: inline-block; position:fixed; left:300px;" class="fragment fade-right"> - A Song of Scala and Python </span><br/>
+					    <span style="display: inline-block; position:fixed; left:300px;" class="fragment fade-right"> - The Finkler Questions </span><br/>
+					    <span style="display: inline-block; position:fixed; left:300px;" class="fragment fade-right"> - The Sense of an Ending</span><br/>
+					</ul>
+				    </p>
+				</section>
+				<section>
+					<h3><a>Who I am</a></h3>
+					<section class="hbox" data-markdown ALIGN=CENTER style='left:180px;'>
+						* [Data Engineer]() by day
+						* [Data Scientist]() by night
+						* [Data Geek](), all day long
+						* Natural habitat: [KI labs](https://www.ki-labs.com)
+						* MSc Computer Science, [TU München](https://www.in.tum.de/en/cover-page/)
+						* Software Engineer, [Oracle Financial Services Software](https://www.oracle.com/in/industries/financial-services/), Bangalore
+					</section>
+				</section>
+
+				<section data-background="images/spark.gif">
+					<h3><a>A Brief History of Spark</a></h3>
+				</section>
+
+				<section>
+					<h3><a>A brief history of Spark</a></h3>
+					<img src='images/mr.png' ALIGN='center' style='top:100px;' width='500px' height='100px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='center'>
+						##### . ###
+						##### . ###
+						#### [MapReduce and Recycle]() ####
+						* [Slow]() - Disk based access
+						* [Cumbersome programming]() - More lines of code
+						* [Abstractions-less]() - Default
+						* [Batch processing]() - Nothing more
+						* [Built-in Interactive mode]() - Not available
+						* [Support]()- Java, Python (verbose)
+					</section>
+				</section>
+
+				<section>
+					<h3><a>A brief history of Spark</a></h3>
+					<img src='images/black-spark.png' ALIGN='left' style='border:none; top:600px;' top='300px' left='10px' width='400px' height='200px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:450px;'>
+						* [Unified analytics engine]()
+						* [Matei Zaharia]()
+						* [AMPLab](), UC Berkeley
+						* [October 2012](), Spark v0.6.0
+						* [June 2013](), Apache Incubator
+					</section>
+				</section>
+
+				<section>
+				<h3><a>A brief history of Spark</a></h3>
+				<img src='images/black-spark.png' ALIGN='left' style='border:none; top:600px;' top='300px' left='10px' width='400px' height='200px' /> <!-- Image will stick to the top left of the parent element -->
+				<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:450px;'>
+					* [Fast]() - Processing in-memory
+					* [Concise]() - Lesser lines of code
+					* [Special Abstractions]() - RDDs ++
+					* [Stream and batch processing]()
+					* [Built-in Interactive mode]()
+					* [Support]()- Java, Scala, Python & R
+				</section>
+			    </section>
+
+				<section data-background="images/grapes.gif">
+					<h3><a>Grapes of Spark</a></h3>
+				</section>
+
+				<section>
+					<h3><a>Grapes of Spark</a></h3>
+					<img src='images/mr-spark1.png' ALIGN='left' style='border:none; top:600px;' top='300px' left='10px' width='400px' height='300px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:450px;'>
+						#### [Faster processing]() ####
+						* [Stream and batch processing]()
+						* [In-memory]() processing
+						* [DAG]() - Non-linear flow
+						* [Lazy Evaluation]()
+						* [Calcite]() - Query optimiser
+					</section>
+				</section>
+
+				<section>
+					<h3><a>Grapes of Spark</a></h3>
+					<img src='images/mr-spark2.png' ALIGN='left' style='top:600px;' top='300px' left='10px' width='350px' height='200px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:400px;'>
+						#### [Ease of Use]() ####
+						* [Concise]() - Less lines of code
+						* [Support]() - Java, Scala, Python & R
+						* [80]() high-level operators
+						* [Built-in Interactive mode]()
+						* [Numerous projects]() atop Spark
+					</section>
+				</section>
+
+				<section>
+					<h3><a>Grapes of Spark</a></h3>
+					<img src='images/mr-spark3.png' ALIGN='left' style='border:none; top:600px;' top='300px' left='10px' width='300px' height='300px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:350px;'>
+						#### [Diversity]() ####
+						* [Leverages]() multiple libraries
+						* [Spark SQL]() - SQL-styled processing
+						* [Spark Streaming]() - streaming data
+						* [MLlib]() - Machine Learning
+						* [GraphX and GraphFrames]() - Graphs
+						* [BlinkDB/Tachyon]() - Fast SQL Analytics
+					</section>
+				</section>
+
+				<section>
+					<h3><a>Grapes of Spark</a></h3>
+					<img src='images/sparkitecture_rdd.png' ALIGN='left' style='top:100px;' width='400px' height='500px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:420px;'>
+						##### [Resilient Distributed Datasets]() #####
+						* [Primary]() abstraction in Spark
+						* [Created/Transformed]() - File or RDDs
+						* [Immutable]() - Read-only
+						* [Partitioned]() - Across nodes
+						* [Distributed]() - Parallel processing
+						* [Fault-tolerant]() - Lineage
+						* [Object collections]() - Java, Scala
+					</section>
+				</section>
+
+				<section>
+					<h3><a>Grapes of Spark</a></h3>
+					<img src='images/sparkitecture_df.png' ALIGN='left' style='top:100px;' width='400px' height='500px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:420px;'>
+						##### [DataFrames]() #####
+						* [Inspired]() by DFs in R/Python
+						* [Relational]() - Table structure
+						* [Named]() - Columns
+						* [Schema]() - Defined by a schema
+						* [SQL]() - API, build query plans
+						* [Catalyst]() - Query optimiser
+					</section>
+				</section>
+
+				<section>
+					<h3><a>Grapes of Spark</a></h3>
+					<img src='images/sparkitecture_ds.png' ALIGN='left' style='top:100px;' width='400px' height='500px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:420px;'>
+						##### [Datasets]() #####
+						* [Best features]() of RDDs and DFs
+						* [Unnamed]() - Columns
+						* [Schema-less]() - No schema
+						* [Non-relational]() - No table
+						* [Type safe]() - Compile-time type safety
+					</section>
+				</section>
+
+				<section data-background="images/metamorphosis.gif">
+					<h3><a>The Metamorphosis</a></h3>
+				</section>
+
+				<section>
+					<h3><a>The Metamorphosis</a></h3>
+					<img src='images/metamorphosis.png' ALIGN='left' style='left:1px; top:100px;' width='400px' height='300px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:420px;'>
+						##### [Transformations]() #####
+						* [Operates]() on RDDs and DFs
+						* [Creates]() - new RDDs
+						* [RDD Lineage]() - a DAG
+						* [Lazy Evaluation]() - Not immediate
+						* map, filter, groupBy, sortBy
+						* union, intersection, distinct
+					</section>
+				</section>
+
+				<section>
+					<h3><a>The Metamorphosis</a></h3>
+					<img src='images/metamorphosis.png' ALIGN='left' style='left:1px; top:100px;' width='400px' height='300px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:420px;'>
+						##### [Actions]() #####
+						* [Operates]() on RDDs and DFs
+						* [Functions]() - applied on RDDs
+						* [Triggered]() - No new RDDs
+						* [Lazy Evaluation]() - Initiator
+						* count, reduce, collect, aggregate
+						* first, take, sum
+					</section>
+				</section>
+
+				<section data-background="images/fire-snake.gif">
+					<h3><a>Brave New PySpark</a></h3>
+				</section>
+
+				<section>
+					<h3><a>Brave New PySpark</a></h3>
+					<h6><a>Python + Spark</a></h6>
+					<img src='images/pyspark.jpeg' ALIGN='center' style='left:1px; top:100px;' width='700px' height='500px' />
+				</section>
+
+				<section>
+					<h3><a>Brave New PySpark</a></h3>
+					<h6><a>Time and Complexity</a></h6>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px;' width='400px' height='400px' />
+					<img src='images/wc_2.png' ALIGN='left' style='left:1px; top:100px;' width='400px' height='400px' /><!-- Image will stick to the top left of the parent element -->
+				</section>
+
+				<section>
+					<h3><a>Brave New PySpark</a></h3>
+					<h6><a>Notebook Integration</a></h6>
+					<img src='images/notebook.png' ALIGN='center' style='left:1px; top:100px;' width='800px' height='400px' />
+				</section>
+
+				<section>
+					<h3><a>Brave New PySpark</a></h3>
+					<h5><a>Setup</a></h5>
+					<h6>Option 1: Download Tar release</h6>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+wget https://www.apache.org/spark-2.4.0/spark-2.4.0-bin-hadoop2.7.tgz
+					</code></pre>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+tar -xzf spark-2.4.0-bin-hadoop2.7.tgz
+					</code></pre>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+PATH="$PATH:$(pwd)/spark-2.4.0-bin-hadoop2.7/bin
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='400px' height='400px' />
+				</section>
+
+				<section>
+					<h3><a>Brave New PySpark</a></h3>
+					<h5><a>Setup</a></h5>
+					<h6>Option 2: Using Brew on MacOS</h6>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+brew install apache-spark
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='400px' height='400px' />
+				</section>
+
+				<section>
+					<h3><a>Brave New PySpark</a></h3>
+					<h5><a>Setup</a></h5>
+					<h6>Option 3: Using PyPi</h6>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+pip install pyspark
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='400px' height='400px' />
+				</section>
+
+				<section>
+					<h3><a>Brave New PySpark</a></h3>
+					<h5><a>Setup</a></h5>
+					<h6>Option 4: Using Conda</h6>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+conda install -c conda-forge pyspark=2.3.1
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='400px' height='400px' />
+				</section>
+
+				<section>
+					<h3><a>Brave New PySpark</a></h3>
+					<h5><a>Setup</a></h5>
+					<h6>Configure and Start</h6>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+## Running PySpark in cluster mode inside Jupyter
+					</code></pre>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+## Include additional python modules
+					</code></pre>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+IPYTHON_OPTS="notebook" pyspark \
+    --master spark://localhost:7077 \
+    --executor-memory 7g             \
+    --py-files tensorflow-py2.7.egg
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='400px' height='400px' />
+				</section>
+
+				<section>
+					<h3><a>Brave New PySpark</a></h3>
+					<h6><a>Easy to Prototype</a></h6>
+					<img src='images/lego.gif' ALIGN='center' style='left:1px; top:100px;' width='700px' height='500px' />
+				</section>
+
+				<section data-background="images/panda.gif">
+					<h3><a>To Kill a Mocking Bear</a></h3>
+				</section>
+
+				<section>
+					<h3><a>To Kill a Mocking Bear</a></h3>
+					<h6><a>Loading CSV</a></h6>
+					<p  ALIGN='left'>Pandas Dataframe</p>
+						<pre><code class="hljs" data-trim contenteditable width='800px';>
+df = pd.read_csv("world_rankings.csv")
+					</code></pre>
+					<p  ALIGN='left'>PySpark Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df = sql.context.read.format('com.databricks.spark.csv')\
+     .options(header='true', inferschema='true')\
+	 .load("world_rankings.csv")
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='800px' height='200px' />
+				</section>
+
+				<section>
+					<h3><a>To Kill a Mocking Bear</a></h3>
+					<h6><a>View Dataframe</a></h6>
+					<p  ALIGN='left'>Pandas Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df
+df.head(10)
+					</code></pre>
+					<p  ALIGN='left'>PySpark Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df
+df.show(10)
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='800px' height='200px' />
+				</section>
+
+
+				<section>
+					<h3><a>To Kill a Mocking Bear</a></h3>
+					<h6><a>Columns and Datatypes</a></h6>
+					<p  ALIGN='left'>Pandas Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.columns
+df.dtypes
+					</code></pre>
+					<p  ALIGN='left'>PySpark Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.columns
+df.dtypes
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='800px' height='200px' />
+				</section>
+
+				<section>
+					<h3><a>To Kill a Mocking Bear</a></h3>
+					<h6><a>Drop Column</a></h6>
+					<p  ALIGN='left'>Pandas Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.drop('column1', axis=1)
+					</code></pre>
+					<p  ALIGN='left'>PySpark Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.drop('column1')
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='800px' height='200px' />
+				</section>
+
+				<section>
+					<h3><a>To Kill a Mocking Bear</a></h3>
+					<h6><a>Fill Nulls</a></h6>
+					<p  ALIGN='left'>Pandas Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.fillna(0)
+					</code></pre>
+					<p  ALIGN='left'>PySpark Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.fillna(0)
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='800px' height='200px' />
+				</section>
+
+				<section>
+					<h3><a>To Kill a Mocking Bear</a></h3>
+					<h6><a>Aggregation</a></h6>
+					<p  ALIGN='left'>Pandas Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.groupby(['column1', 'column2']) \
+	.agg({"column3": "mean", "column4": "min"})
+					</code></pre>
+					<p  ALIGN='left'>PySpark Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.groupby(['column1', 'column2']) \
+	.agg({"column3": "mean", "column4": "min"})
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='800px' height='200px' />
+				</section>
+
+				<section>
+					<h3><a>To Kill a Mocking Bear</a></h3>
+					<h6><a>Merge/Join Dataframes</a></h6>
+					<p  ALIGN='left'>Pandas Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+left.merge(right, on='key')
+left.merge(right, left_on='column1', right_on='column2')
+					</code></pre>
+					<p  ALIGN='left'>PySpark Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+left.join(right, on='key')
+left.join(right, left.column1 == right.column2
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='800px' height='200px' />
+				</section>
+
+				<section>
+					<h3><a>To Kill a Mocking Bear</a></h3>
+					<h6><a>Summary Statistics</a></h6>
+					<p  ALIGN='left'>Pandas Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.describe()
+					</code></pre>
+					<p  ALIGN='left'>PySpark Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.describe().show()
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='800px' height='200px' />
+				</section>
+
+				<section>
+					<h3><a>To Kill a Mocking Bear</a></h3>
+					<h6><a>Rename columns</a></h6>
+					<p  ALIGN='left'>Pandas Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.columns = ['C1', 'C2', 'C3']
+df.rename(columns = {"C1": "c1", "C2": "c2", "C3": "c3"})
+					</code></pre>
+					<p  ALIGN='left'>PySpark Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.toDF('C1', 'C2', 'C3')
+df.withColumnRenamed('C1', 'c1')
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='800px' height='200px' />
+				</section>
+
+				<section>
+					<h3><a>To Kill a Mocking Bear</a></h3>
+					<h6><a>Filter Columns</a></h6>
+					<p  ALIGN='left'>Pandas Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df[(df.column1 < 10) && (df.column2 == 100)]
+					</code></pre>
+					<p  ALIGN='left'>PySpark Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.filter((df.column1 < 10) && (df.column2 == 100))
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='800px' height='200px' />
+				</section>
+
+				<section>
+					<h3><a>To Kill a Mocking Bear</a></h3>
+					<h6><a>Add Column</a></h6>
+					<p  ALIGN='left'>Pandas Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df[df.column] = 1 / df.column
+					</code></pre>
+					<p  ALIGN='left'>PySpark Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.withColumn('df.column', 1 / df.column)
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='800px' height='200px' />
+				</section>
+
+				<section>
+					<h3><a>To Kill a Mocking Bear</a></h3>
+					<h6><a>Standard Transformations</a></h6>
+					<p  ALIGN='left'>Pandas Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+import numpy as np
+df['log_values'] = np.log(df.values)
+					</code></pre>
+					<p  ALIGN='left'>PySpark Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+import pyspark.sql.functions as F
+df.withColumn('log_values', F.log(df.values))
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='800px' height='200px' />
+				</section>
+
+				<section>
+					<h3><a>To Kill a Mocking Bear</a></h3>
+					<h6><a>Row Conditional Statements</a></h6>
+					<p  ALIGN='left'>Pandas Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df['conditional'] = df.apply(lambda x: 1 if x.column1 > 20
+		else 10 if x.column2 == 100 else 42, axis=1)
+					</code></pre>
+					<p  ALIGN='left'>PySpark Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+import pyspark.sql.functions as F
+df.withColumn('conditional', \
+ F.when(df.column1 > 20, 1) \
+  .when(df.column2 == 100, 10) \
+  .otherwise(42))
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='800px' height='200px' />
+				</section>
+
+				<section>
+					<h3><a>To Kill a Mocking Bear</a></h3>
+					<h6><a>Pivot Table</a></h6>
+					<p  ALIGN='left'>Pandas Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+pd.pivot_table(df, values='column4', \
+	index=['column1', 'column2'], columns=['column3], \
+    aggfunc=np.sum)
+					</code></pre>
+					<p  ALIGN='left'>PySpark Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.groupBy("column1", "column2").pivot("column3").sum("column4")
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='800px' height='200px' />
+				</section>
+
+				<section>
+					<h3><a>To Kill a Mocking Bear</a></h3>
+					<h6><a>Histogram</a></h6>
+					<p  ALIGN='left'>Pandas Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.hist()
+					</code></pre>
+					<p  ALIGN='left'>PySpark Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.sample(False, 0.1).toPandas().hist()
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='800px' height='200px' />
+				</section>
+
+				<section>
+					<h3><a>To Kill a Mocking Bear</a></h3>
+					<h6><a>SQL queries</a></h6>
+					<p  ALIGN='left'>Pandas Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+Not Applicable
+					</code></pre>
+					<p  ALIGN='left'>PySpark Dataframe</p>
+					<pre><code class="hljs" data-trim contenteditable width='800px';>
+df.createOrReplaceTempView('TempTable')
+df_query = spark.sql('select * from TempTable')
+					</code></pre>
+					<img src='images/wc_1.png' ALIGN='left' style='left:1px; top:100px; visibility: hidden; ' width='800px' height='200px' />
+				</section>
+
+				<section data-background="images/production.gif">
+					<h3><a>Pride and Production</a></h3>
+				</section>
+
+				<section>
+					<h3><a>Pride and Production</a></h3>
+					<img src='images/udf.png' ALIGN='left' style='top:100px;' width='400px' height='500px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:420px;'>
+						##### [Python functions in Spark]() #####
+						* [Iterate]() through complete data
+						* [Row-by-row]() access too slow
+						* [Distributed]() chunks of data
+						* [Production]() environment
+						* [Conventional]() functions don't suffice
+					</section>
+				</section>
+
+				<section>
+					<h3><a>Pride and Production</a></h3>
+					<img src='images/udf_2.png' ALIGN='left' style='top:100px;' width='360px' height='350px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:380px;'>
+						##### [PySpark UDFs (Row-at-a-time UDFs)]() #####
+						* [Primitive]() way of using Python functions
+						* [map()]() and [apply()]()
+						* [Output data type]() must be specified
+						* [Series/Scalar]() operations only
+						* [Row-by-row]() access too slow
+						* [Non-vectorized]() ser/deser
+					</section>
+				</section>
+
+				<section>
+					<h3><a>Pride and Production</a></h3>
+					<img src='images/pandas_udf.png' ALIGN='left' style='top:200px;' width='390px' height='500px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:400px;'>
+						##### [Pandas UDFs (Vectorized UDFs)]() #####
+						* [Optimised]() way for Python functions
+						* [Supports]() Pandas and Scikit
+						* [Apache Arrow]() based
+						* [Vectorized]() ser/deser
+						* [Output data type]() must be specified
+						* [PandasUDFType]() must be specified
+						* [DataFrame Schema]() must be specified
+						* [Scalar]() and [Grouped Map]() operations
+					</section>
+				</section>
+
+				<section>
+					<h3><a>Pride and Production</a></h3>
+					<h6><a>Scalar and GroupedBy UDFs</a></h6>
+					<h6>Differences</h6>
+					<img src='images/differences.png' ALIGN='center' style='left:1px; top:100px; border:none' width='500px' height='400px' />
+				</section>
+
+				<section>
+					<h3><a>Pride and Production</a></h3>
+					<h6><a>Scalar and GroupedBy UDFs</a></h6>
+					<h6>Performance</h6>
+					<img src='images/performance.png' ALIGN='center' style='left:1px; top:100px; border:none' width='500px' height='400px' />
+				</section>
+
+				<section>
+					<h3><a>Pride and Production</a></h3>
+					<img src='images/mllib.png' ALIGN='left' style='top:200px;' width='340px' height='600px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:360px;'>
+						##### [DBSCAN on Spark]() #####
+						* [Stay Points]() detection
+						* [Telematics]() data from trucks
+						* [Spark MLlib]() does not offer [DBSCAN]()
+						* [Density-Based Spatial Clustering]()
+						* [O(n^2)]() Complexity
+						* [Implementations]() exist
+						* [Non-performant]() and with bugs
+						* [Scikit]() required
+						* [ELKI]() - [O(nlogn)]() - [JAVA]()
+					</section>
+				</section>
+
+				<section>
+					<h3><a>Pride and Production</a></h3>
+					<h6><a>DBSCAN using Pandas UDF</a></h6>
+					<img src='images/dbscan.png' ALIGN='center' style='left:1px; top:100px; border:none' width='500px' height='500px' />
+				</section>
+
+				<section data-background="images/tetris.gif">
+					<h3><a>Sense and Scalability</a></h3>
+				</section>
+
+				<section>
+					<h3><a>Sense and Scalability</a></h3>
+					<img src='images/comparison.png' ALIGN='left' style='top:200px;' width='360px' height='600px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:380px;'>
+						##### [Scala UDFs]() #####
+						* [Driver]() in native Python
+						* [Non-native JVM]() objects
+						* [2x Ser/Deser]() required
+						* [Scala UDFs]() best approach
+						* [Spark v2.1]()
+						* [JVM]() only scope
+						* [Unnecessary Ser/Deser]() avoided
+					</section>
+				</section>
+
+				<section>
+					<h3><a>Sense and Scalability</a></h3>
+					<img src='images/scala_udf.png' ALIGN='left' style='top:200px;' width='360px' height='600px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:380px;'>
+						##### [Scala UDFs]() #####
+						* [Create Scala UDF]() as Scala project
+						* [Build JAR]() using SBT
+						* [Submit JAR]() to the PySpark session
+						* [Register]() the Scala UDF
+						* [JVM]() only scope
+						* [Ser/Deser]() completely avoided
+					</section>
+				</section>
+
+				<section>
+					<h3><a>Sense and Scalability</a></h3>
+					<p><a href="https://gist.github.com/maropu/9f995f65b1cb160865e79e14e5216320">Benchmark Python UDF vs Pandas UDF vs Scala UDF</a></p>
+					<img src='images/graph.png' ALIGN='center' style='left:1px; top:100px; border:none' width='500px' height='400px' />
+				</section>
+
+				<section data-background="images/azhor.gif">
+					<h3><a>A Song of Scala and Python</a></h3>
+				</section>
+
+				<section>
+					<h3><a>A Song of Scala and Python</a></h3>
+					<img src='images/cat.gif' ALIGN='left' style='top:200px;' width='340px' height='600px' /> <!-- Image will stick to the top left of the parent element -->
+					<section class="hbox" data-markdown ALIGN='left' style='top:100px; left:360px;'>
+						##### [Patch-22]() #####
+						* [High]() Python expertise
+						* [Spark MLlib]() not mature enough
+						* [Pandas and Scikit]() required
+						* [Blackbox behaviour]() of UDFs
+						* [High-level column based]() functions are better
+						* [Ser-Deser]() minimised
+					</section>
+				</section>
+
+				<section>
+					<h3><a>A Song of Scala and Python</a></h3>
+					<h6><a>The Py4J Redemption</a></h6>
+					<img src='images/py4j.png' ALIGN='center' style='left:1px; top:100px; border:none' width='500px' height='400px' />
+				</section>
+
+				<section>
+					<h3><a>A Song of Scala and Python</a></h3>
+					<h6><a>No Python for Spark main()</a></h6>
+					<img src='images/twitter.png' ALIGN='center' style='left:1px; top:100px; border:none' width='700px' height='400px' />
+				</section>
+
+				<section>
+					<h3><a>A Song of Scala and Python</a></h3>
+					<img src='images/scala-python.jpeg' ALIGN='center' style='left:1px; top:10px; border:none' width='500px' height='600px' />
+				</section>
+
+				<section data-background="images/finkler.gif">
+					<h3><a>The Finkler Questions</a></h3>
+				</section>
+
+				<section data-background="images/end.gif">
+					<h3><a>The Sense of an Ending</a></h3>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/search/search.js', async: true },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
